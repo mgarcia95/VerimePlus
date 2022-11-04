@@ -1,39 +1,38 @@
 pipeline {
+   agent any
 
-  agent any
+   tools {nodejs "Node19"}
 
-  parameters {
-    string(name: 'SPEC', defaultValue: "cypress/integration/**/**", description:"Enter the script path that you want to execute")
-    choice(name: "BROWSER", choices: ['chrome','edge', 'firefox'], description:"Choice the browser where you want to execute your script")
-  }
+   environment {
+       CHROME_BIN = '/bin/google-chrome'
+      
+   }
 
-  tools {nodejs "nodejs"}
+   stages {
+       stage('Dependencies') {
+           steps {
+               sh 'npm i'
+           }
+       }
+       stage('e2e Tests') {
+         Parallel{
+             stage('Test 1') {
+                  steps {
+                sh 'npm run cypress:ci'
+                  }
+               }
+             
+             stage('Test 2') {
+                  steps {
+                sh 'npm run cypress2:ci'
+                  }
+               }
 
-  stages {
-    stage('Building') {
-      steps {
-        echo "Building the application"
-      }
-    }
-
-      stage('Testing') {
-      steps {
-        sh "npm ci"
-        sh "npm run test:ci:record"
-        }
-      }
-
-      stage('Deploying') {
-        steps{
-          echo "Deploy the application"
-        }
-      }
-  }
-
-  post{
-    always{
-      publishHTML([allowMissing: false, alwaysLinkToLastBuild:false, keepAll: true,reportDir: 'cypress/report', reportFiles:'index.html', reportName:'HTML Report', reportTitles: ''])
-    }
-  }
-
+       }
+       stage('Deploy') {
+           steps {
+               echo 'Deploying....'
+           }
+       }
+   }
 }
