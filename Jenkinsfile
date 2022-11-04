@@ -3,6 +3,8 @@ pipeline {
 
   tools {nodejs "Node19"}
 
+  options { ansiColor('xterm') }
+  
   parameters{
     choice(name:"BROWSER", choices:['chrome','chromium'],description:"Select the browser where to run")
   }
