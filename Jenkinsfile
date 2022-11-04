@@ -17,7 +17,7 @@ pipeline {
       stage('Testing') {
       steps {
         sh "npm ci"
-        sh "npm run test:ci:record --browser ${BROWSER} --spec ${SPEC}"
+        sh "npm run test:ci:record"
         }
       }
 
