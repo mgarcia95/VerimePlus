@@ -16,26 +16,26 @@ pipeline {
       steps {
         echo "Building the application"
       }
+    }
 
       stage('Testing') {
       steps {
         bat "npn i"
         bat "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+        }
       }
 
       stage('Deploying') {
         steps{
           echo "Deploy the application"
         }
-        
       }
-    }
-
-    post{
-      always{
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild:false, keepAll: true,reportDir: 'cypress/report', reportFiles:'index.html', reportName:'HTML Report', reportTitles: ''])
-      }
-    }
-
   }
+
+  post{
+    always{
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild:false, keepAll: true,reportDir: 'cypress/report', reportFiles:'index.html', reportName:'HTML Report', reportTitles: ''])
+    }
+  }
+
 }
