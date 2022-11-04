@@ -1,21 +1,41 @@
 pipeline {
-  
+
   agent any
 
+  parameters {
+    string(name: 'SPEC', defaultValue: "cypress/integration/**/**", description:"Enter the script path that you want to execute")
+    choice(name: "BROWSER", choices: ['chrome','edge', 'firefox'], description:"Choice the browser where you want to execute your script")
+  }
+
+  options{
+    ansiColor('xtermn')
+  }
+
   stages {
-    stage('build and test') {
-      environment {
-        // we will be recording test results and video on Cypress dashboard
-        // to record we need to set an environment variable
-        // we can load the record key variable from credentials store
-        // see https://jenkins.io/doc/book/using/using-credentials/
-        CYPRESS_RECORD_KEY = credentials('cypress-example-kitchensink-record-key')
+    stage('Building') {
+      steps {
+        echo "Building the application"
       }
 
+      stage('Testing') {
       steps {
-        sh 'npm ci'
-        sh "npm run test:ci:record"
+        bat "npn i"
+        bat "npx cypress run --browser ${BROWSER} --spec ${SPEC}"
+      }
+
+      stage('Deploying') {
+        steps{
+          echo "Deploy the application"
+        }
+        
       }
     }
+
+    post{
+      always{
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild:false, keepAll: true,reportDir: 'cypress/report', reportFiles:'index.html', reportName:'HTML Report', reportTitles: ''])
+      }
+    }
+
   }
 }
