@@ -4,7 +4,7 @@ pipeline {
   tools {nodejs "Node19"}
 
   parameters{
-    string(name:"BROWSER", choices:['chrome','edge'],description:"Select the browser where to run")
+    choice(name:"BROWSER", choices:['chrome','edge'],description:"Select the browser where to run")
   }
 
   stages {
