@@ -14,7 +14,8 @@ pipeline {
                sh 'npm i'
            }
        }
-       
+       stage('e2e Tests') {
+         Parallel{
              stage('Test 1') {
                   steps {
                 sh 'npm run cypress:ci'
@@ -27,7 +28,7 @@ pipeline {
                   }
                }
 
-       
+       }
        stage('Deploy') {
            steps {
                echo 'Deploying....'
