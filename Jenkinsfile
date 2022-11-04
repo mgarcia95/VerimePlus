@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('build and test'){
       steps {
-        sh 'npx cypress open'
+        sh 'npm cypress open --browser chrome --spec **/spec.cy.js '
       }
     }
   }
