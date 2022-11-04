@@ -1,7 +1,7 @@
 pipeline {
    agent any
 
-   tools {nodejs "Node19"}
+   tools {nodejs "Node 19"}
 
    environment {
        CHROME_BIN = '/bin/google-chrome'
@@ -15,7 +15,7 @@ pipeline {
            }
        }
        stage('e2e Tests') {
-         Parallel{
+       Parallel{
              stage('Test 1') {
                   steps {
                 sh 'npm run cypress:ci'
@@ -27,7 +27,9 @@ pipeline {
                 sh 'npm run cypress2:ci'
                   }
                }
-          }
+
+         }
+
        }
        stage('Deploy') {
            steps {
