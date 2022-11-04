@@ -7,6 +7,8 @@ pipeline {
     choice(name: "BROWSER", choices: ['chrome','edge', 'firefox'], description:"Choice the browser where you want to execute your script")
   }
 
+  tools {nodejs "nodejs"}
+
   stages {
     stage('Building') {
       steps {
