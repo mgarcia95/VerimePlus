@@ -1,27 +1,32 @@
 pipeline {
-    agent any
-
-    tools {nodejs "Node 16"}
-
-    environment {
-        CHROME_BIN = '/bin/google-chrome'
+  // This pipeline requires the following plugins:
+  // * Git: https://plugins.jenkins.io/git/
+  // * Workflow Aggregator: https://plugins.jenkins.io/workflow-aggregator/
+  // * JUnit: https://plugins.jenkins.io/junit/
+  agent 'any'
+  stages {
+    stage('Checkout') {
+      steps {
+        script {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/OctopusSamples/junit-cypress-test.git']]])
+        }
+      }
     }
-
-    stages {
-        stage('Dependencies') {
-            steps {
-                sh 'npm i'
-            }
-        }
-        stage('e2e Tests') {
-            steps {
-                sh 'npm run cypress:ci'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+    stage('Dependencies') {
+      steps {
+        sh(script: 'npm install')        
+      }
     }
+    stage('Test') {
+      steps {
+        sh(script: 'NO_COLOR=1 node_modules/.bin/cypress run || true')          
+      }
+    }
+  }
+  post {
+    always {
+      junit(testResults: 'cypress/results/results.xml', allowEmptyResults : true)
+      archiveArtifacts(artifacts: 'cypress/videos/sample_spec.js.mp4', fingerprint: true) 
+    }
+  }
 }
