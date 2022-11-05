@@ -4,7 +4,7 @@ pipeline {
   tools {nodejs "Node19"}
 
   options { ansiColor('xterm') }
-  
+
   parameters{
     choice(name:"BROWSER", choices:['chrome','chromium'],description:"Select the browser where to run")
   }
@@ -17,4 +17,10 @@ pipeline {
       }
     }
   }
+
+   post { 
+        always { 
+            sh 'npm run cleanup && npm run cy_dashboard && npm run merge_reports && npm run mochawesome_report'
+        }
+    }
 }
