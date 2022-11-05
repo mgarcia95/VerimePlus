@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cleanup": "rm -fr cypress/reports",
     "cy_dashboard": "cypress run --record --key 7874787d-89d7-44b9-b0d1-295d546802e1"
   },
   "author": "Manuel",
