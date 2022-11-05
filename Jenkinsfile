@@ -22,7 +22,7 @@ pipeline {
 
    post { 
         always { 
-            sh 'npm run cleanup && npm run cy_dashboard && npm run merge_reports && npm run mochawesome_report'
+            sh 'npm run cy_dashboard'
         }
     }
 }
