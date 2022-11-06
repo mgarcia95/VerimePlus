@@ -15,14 +15,15 @@ pipeline {
         //sh 'npm i'
         //sh 'npx cypress run --browser ${BROWSER} --spec **/spec.cy.js '
         echo 'Building the test'
+        sh 'npm run cy_dashboard'
       }
       
     }
   }
 
-   post { 
+   /*post { 
         always { 
             sh 'npm run cy_dashboard'
         }
-    }
+    }*/
 }
