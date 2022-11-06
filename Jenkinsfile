@@ -20,10 +20,4 @@ pipeline {
       
     }
   }
-
-   /*post { 
-        always { 
-            sh 'npm run cy_dashboard'
-        }
-    }*/
 }
