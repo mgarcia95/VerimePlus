@@ -22,7 +22,7 @@ pipeline {
   post {
     always {
         echo 'Reporting to dashboard'
-        sh 'npm run cy_dashboard'
+        sh 'npm run cy:report'
     }
   }
 }
