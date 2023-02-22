@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cy_dashboard": "cypress run --record --key 7874787d-89d7-44b9-b0d1-295d546802e1",
+    //"cy_dashboard": "cypress run --record --key 7874787d-89d7-44b9-b0d1-295d546802e1",
+    "cy_dashboard": "cypress run --record --key bd8954f1-fce2-47c5-ad20-dc27c719d517",
     "cleanup": "rm -fr cypress/reports",
     "merge_reports": "mochawesome-merge cypress/reports/mochawesome-report/*.json > output.json",
     "mochawesome_report": "marge --reportDir cypress/reports/mochawesome-html-report -t Cypress_Test_Report -p Cypress_HMTL_Report -f Cypress_HMTL_Report --charts true output.json",
